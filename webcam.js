@@ -122,13 +122,22 @@ var Webcam = {
 			}, 
 			function(stream) {
 				// got access, attach stream to video
-				video.src = window.URL.createObjectURL( stream ) || stream;
-				Webcam.stream = stream;
-				Webcam.loaded = true;
-				Webcam.live = true;
-				Webcam.dispatch('load');
-				Webcam.dispatch('live');
-				Webcam.flip();
+				// video.src = window.URL.createObjectURL( stream ) || stream;
+				// Webcam.stream = stream;
+				// Webcam.loaded = true;
+				// Webcam.live = true;
+				// Webcam.dispatch('load');
+				// Webcam.dispatch('live');
+				// Webcam.flip();
+				video.onloadedmetadata = function(e) {
+			      Webcam.stream = stream;
+			      Webcam.loaded = true;
+			      Webcam.live = true;
+			      Webcam.dispatch('load');
+			      Webcam.dispatch('live');
+			      Webcam.flip();
+			   }
+			   video.src = window.URL.createObjectURL( stream ) || stream;
 			},
 			function(err) {
 				return self.dispatch('error', "Could not access webcam.");
